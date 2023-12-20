@@ -19,11 +19,11 @@ function playRound(playerSelection, computerSelection){
     let result = (playerSelection - computerSelection + 3) % 3;
     switch(result){
         case 0:
-            return "Tie";
+            return ["Tie", 0];
         case 2:
-            return "You Lose! " + convertNumtoRPC(playerSelection) + " beats " + convertNumtoRPC(computerSelection) 
+            return ["You Lose! " + convertNumtoRPC(playerSelection) + " beats " + convertNumtoRPC(computerSelection), 2] 
         case 1:
-            return "You Win! " + convertNumtoRPC(playerSelection) + " beats " + convertNumtoRPC(computerSelection) 
+            return ["You Win! " + convertNumtoRPC(playerSelection) + " beats " + convertNumtoRPC(computerSelection), 1] 
     }
 }
 
@@ -51,24 +51,95 @@ function convertNumtoRPC(num){
     }
 }
 
-function game(){
-    let winCounter = 0;
-    for(i = 0; i < 5; i++){
-        let result = null;
-        do{
-            let playerSelection = prompt("Your choice?");
-            let computerSelection = getComputerChoice();
-            result = playRound(playerSelection, computerSelection);
-            console.log(result);
-            if(result.charAt(4) === "W"){
-                winCounter++;
-            }
-        } while(result === "Tie");
+playerScore = 0;
+computerScore = 0;
+
+rockBtn = document.querySelector("#Rock");
+paperBtn = document.querySelector("#Paper");
+scissorsBtn = document.querySelector("#Scissors");
+
+result = document.querySelector("#Result");
+result2 = document.querySelector("#Result2");
+score = document.querySelector("#Score");
+
+rockBtn.addEventListener('click',() => {
+    if(playerScore === 0 && computerScore === 0){
+        result2.textContent = "";
     }
-    if(winCounter === 3){
-        console.log("You won a best-of-five");
+    tmp = playRound("Rock", getComputerChoice());
+    result.textContent = tmp[0];
+    if(tmp[1] === 1){
+        playerScore++;
     }
-    else{
-        console.log("You lost a best-of-five");
+    if(tmp[1] === 2){
+        computerScore++;
     }
-}
+    if(playerScore === 5){
+        result2.textContent = "You won!";
+        playerScore = 0;
+        computerScore = 0;
+    }
+    if(computerScore === 5){
+        result2.textContent = "You lost!";
+        playerScore = 0;
+        computerScore = 0;
+    }
+    score.textContent = playerScore + "   " + computerScore;
+})
+
+paperBtn.addEventListener('click', () => {
+    if(playerScore === 0 && computerScore === 0){
+        result2.textContent = "";
+    }
+    tmp = playRound("Paper", getComputerChoice());
+    result.textContent = tmp[0];
+    if(playerScore === 0 && computerScore === 0){
+        result2.textContent = "";
+    }
+    if(tmp[1] === 1){
+        playerScore++;
+    }
+    if(tmp[1] === 2){
+        computerScore++;
+    }
+    if(playerScore === 5){
+        result2.textContent = "You won!";
+        playerScore = 0;
+        computerScore = 0;
+    }
+    if(computerScore === 5){
+        result2.textContent = "You lost!";
+        playerScore = 0;
+        computerScore = 0;
+    }
+    score.textContent = playerScore + "   " + computerScore;
+})
+
+scissorsBtn.addEventListener('click', () => {
+    if(playerScore === 0 && computerScore === 0){
+        result2.textContent = "";
+    }
+    tmp = playRound("Scissors", getComputerChoice());
+    result.textContent = tmp[0];
+    if(playerScore === 0 && computerScore === 0){
+        result2.textContent = "";
+    }
+    if(tmp[1] === 1){
+        playerScore++;
+    }
+    if(tmp[1] === 2){
+        computerScore++;
+    }
+    if(playerScore === 5){
+        result2.textContent = "You won!";
+        playerScore = 0;
+        computerScore = 0;
+    }
+    if(computerScore === 5){
+        result2.textContent = "You lost!";
+        playerScore = 0;
+        computerScore = 0;
+    }
+    score.textContent = playerScore + "   " + computerScore;
+})
+
